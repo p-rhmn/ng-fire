@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ng-fire--test-com": {
+      "hosting": {
+        "ng-fire": [
+          "ng-fire--test-com"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ng-fire--test-com"
+  }
+}

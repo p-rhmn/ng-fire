@@ -18,6 +18,10 @@ import {
   getAuth,
   signInWithCustomToken,
   sendPasswordResetEmail,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  FacebookAuthProvider,
+  TwitterAuthProvider,
 } from 'firebase/auth';
 import * as firebase from 'firebase/compat';
 import { FirebaseApps } from '@angular/fire/app';
@@ -53,19 +57,17 @@ export class AuthService {
       })
     );
     console.log(this.currentUser);
+
+    this.afAuth.authState.subscribe((data) => (this.authState = data));
   }
 
-  // signInWithCustomToken(auth, token)
-  //   .then((userCredential) => {
-  //     // Signed in
-  //     const user = userCredential.user;
-  //     // ...
-  //   })
-  //   .catch((error) => {
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //     // ...
-  //   });
+  get authenticated(): boolean {
+    return this.authState !== null;
+  }
+
+  get currentUserId(): string {
+    return this.authenticated ? this.authState.uid : null;
+  }
 
   async emailSignIn(email: string, password: string) {
     try {
@@ -99,6 +101,35 @@ export class AuthService {
       .catch((error) => {
         console.log(error.message);
       });
+  }
+
+  googleLogin() {
+    const provider = new GoogleAuthProvider();
+    return this.socialLogin(provider);
+  }
+
+  githubLogin() {
+    const provider = new GithubAuthProvider();
+    return this.socialLogin(provider);
+  }
+
+  facebookLogin() {
+    const provider = new FacebookAuthProvider();
+    return this.socialLogin(provider);
+  }
+
+  twitterLogin() {
+    const provider = new TwitterAuthProvider();
+    return this.socialLogin(provider);
+  }
+
+  private socialLogin(provider): any {
+    return this.afAuth
+      .signInWithRedirect(provider)
+      .then((credential) => {
+        return this.updateUserData(credential);
+      })
+      .catch((error) => console.log(error.message));
   }
 
   private updateUserData(user) {

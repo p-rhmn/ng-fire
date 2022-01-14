@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
+    projectId: 'ng-fire--test-com',
+    appId: '1:550313353846:web:62cb923739e5062689b557',
+    storageBucket: 'ng-fire--test-com.appspot.com',
     apiKey: 'AIzaSyBWq5ByRVq_i0PbesdSTHWuMSQ9oXaiLY8',
     authDomain: 'ng-fire--test-com.firebaseapp.com',
-    projectId: 'ng-fire--test-com',
-    storageBucket: 'ng-fire--test-com.appspot.com',
     messagingSenderId: '550313353846',
-    appId: '1:550313353846:web:b4b97333b1ec836a89b557',
   },
 };
 
